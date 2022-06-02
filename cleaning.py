@@ -19,6 +19,11 @@ def non_covid_data(file):
     return data_non_covid
 
 
+def read_file(file):
+    data = pd.read_csv(file, index_col="date_added", parse_dates=True)
+    return data
+
+
 def main():
     pass
 

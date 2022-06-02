@@ -2,7 +2,7 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-from cleaning import covid_data, non_covid_data
+from cleaning import covid_data, non_covid_data, read_file
 
 
 def top_rating_genres(data):
@@ -26,7 +26,7 @@ def netflix_genre_plot(dic):
     plt.bar(keys, values)
     plt.xticks(fontsize=5)
     plt.gcf().autofmt_xdate()
-    plt.title("Netflix Genre Comparison During Covid")
+    plt.title("Netflix Genre Comparison During Covid for TV-MA Movie Rating")
     plt.savefig("netflix_genre_comparison.png")
     plt.close()
 
@@ -37,7 +37,7 @@ def disney_genre_plot(dic):
     plt.bar(keys, values)
     plt.xticks(fontsize=5)
     plt.gcf().autofmt_xdate()
-    plt.title("Disney Genre Comparison During Covid")
+    plt.title("Disney Genre Comparison During Covid for G Movie Rating")
     plt.savefig("disney_genre_comparison.png")
     plt.close()
     
@@ -48,28 +48,45 @@ def amazon_genre_plot(dic):
     plt.bar(keys, values)
     plt.xticks(fontsize=5)
     plt.gcf().autofmt_xdate()
-    plt.title("Amazon Genre Comparison During Covid")
+    plt.title("Amazon Genre Comparison During Covid for 13+ Movie Rating")
     plt.savefig("amazon_genre_comparison.png")
     plt.close()
 
 
-def compare_implement_foreign(data_covid, data_non_covid):
-    data_covid = data_covid.dropna(subset=["country"])
-    data_non_covid = data_non_covid.dropna(subset=["country"])
-    countries = data_covid["country"].str.split(",")
-    for i in countries:
-        if len(i) > 1:
-            data_covid["country"] = data_covid["country"].replace(i, "Foreign")
-        #     for j in i:
-        #         if j == "United States":
-        #             data_covid["country"] = data_covid["country"].replace(i, "Domestic")
-        #         else:
-        #             data_covid["country"] = data_covid["country"].replace(i, "Foreign")
-        # elif len(i) > 1:
-        #     data_covid["country"] = data_covid["country"].replace(i, "Foreign")
-    print(data_covid["country"])
+def disney_compare_implement_foreign(data):
+    data = data.dropna(subset=["country"])
+    filter_country = ["United States"]
+    filtered_data = data[~data.country.isin(filter_country)]
+    filtered_data = filtered_data.groupby(pd.Grouper(freq="Y"))
+    result_df = filtered_data["country"].count()
+    result_df.plot(kind="pie")
+    plt.title("Proportion of Added Foreign Movie/TV show in Disney Per Year")
+    plt.savefig("disney_foreign_implementation.png")
+    plt.close()
 
 
+def netflix_compare_implement_foreign(data):
+    data = data.dropna(subset=["country"])
+    filter_country = ["United States"]
+    filtered_data = data[~data.country.isin(filter_country)]
+    filtered_data = filtered_data.groupby(pd.Grouper(freq="Y"))
+    result_df = filtered_data["country"].count()
+    result_df.plot(kind="pie")
+    plt.title("Proportion of Added Foreign Movie/TV show in Netflix Per Year")
+    plt.savefig("netflix_foreign_implementation.png")
+    plt.close()
+
+
+def amazon_compare_implement_foreign(data):
+    data = data.dropna(subset=["country"])
+    filter_country = ["United States"]
+    filtered_data = data[~data.country.isin(filter_country)]
+    filtered_data = filtered_data.groupby(pd.Grouper(freq="Y"))
+    result_df = filtered_data["country"].count()
+    result_df.plot(kind="pie")
+    plt.title("Proportion of Added Foreign Movie/TV show in Amazon Prime Per Year")
+    plt.savefig("amazon_foreign_implementation.png")
+    plt.close()
 
 
 def main():
@@ -84,8 +101,9 @@ def main():
     amazon_genres = top_rating_genres(amazon_covid)
     amazon_genre_plot(amazon_genres)
     # Q3
-    disney_non_covid = non_covid_data("data/disney_plus_titles.csv")
-    compare_implement_foreign(disney_covid, disney_non_covid)
+    disney_compare_implement_foreign(read_file("data/disney_plus_titles.csv"))
+    netflix_compare_implement_foreign(read_file("data/netflix_titles.csv"))
+    amazon_compare_implement_foreign(read_file("data/amazon_prime_titles.csv"))
 
 if __name__ == '__main__':
     main()
