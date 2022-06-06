@@ -54,11 +54,21 @@ def amazon_genre_plot(dic):
 
 
 def netflix_years(data):
+    data.plot()
+    plt.show()
+    plt.close()
+
+
+def disney_years(data):
+    pass
+
+
+def amazon_years(data):
     pass
 
 
 def disney_compare_implement_foreign(data):
-    data = data.dropna(subset=["country"])
+    data = data.dropna(subset=["country"])  
     filter_country = ["United States"]
     filtered_data = data[~data.country.isin(filter_country)]
     filtered_data = filtered_data.groupby(pd.Grouper(freq="Y"))
@@ -109,7 +119,8 @@ def main():
     amazon_genres = top_rating_genres(amazon_covid)
     amazon_genre_plot(amazon_genres)
     # Q2
-    netflix_years(read_file(NETFLIX))
+    netflix_years(netflix_covid)
+    disney_years(disney_covid)
     # Q3
     disney_compare_implement_foreign(read_file(DISNEY))
     netflix_compare_implement_foreign(read_file(NETFLIX))
