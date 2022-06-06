@@ -54,13 +54,13 @@ def amazon_genre_plot(dic):
 
 
 def netflix_years(data):
-    data.plot()
-    plt.show()
-    plt.close()
+    pass
 
 
 def disney_years(data):
-    pass
+    data.plot()
+    plt.show()
+    plt.close()
 
 
 def amazon_years(data):
