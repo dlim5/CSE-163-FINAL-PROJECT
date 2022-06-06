@@ -53,6 +53,10 @@ def amazon_genre_plot(dic):
     plt.close()
 
 
+def netflix_years(data):
+    pass
+
+
 def disney_compare_implement_foreign(data):
     data = data.dropna(subset=["country"])
     filter_country = ["United States"]
@@ -90,20 +94,26 @@ def amazon_compare_implement_foreign(data):
 
 
 def main():
+    # Data
+    NETFLIX = "data/netflix_titles.csv"
+    DISNEY = "data/disney_plus_titles.csv"
+    AMAZON = "data/amazon_prime_titles.csv"
     # Q1
-    disney_covid = covid_data("data/disney_plus_titles.csv")
+    disney_covid = covid_data(DISNEY)
     disney_genres = top_rating_genres(disney_covid)
     disney_genre_plot(disney_genres)
-    netflix_covid = covid_data("data/netflix_titles.csv")
+    netflix_covid = covid_data(NETFLIX)
     netflix_genres = top_rating_genres(netflix_covid)
     netflix_genre_plot(netflix_genres)
-    amazon_covid = covid_data("data/amazon_prime_titles.csv")
+    amazon_covid = covid_data(AMAZON)
     amazon_genres = top_rating_genres(amazon_covid)
     amazon_genre_plot(amazon_genres)
+    # Q2
+    netflix_years(read_file(NETFLIX))
     # Q3
-    disney_compare_implement_foreign(read_file("data/disney_plus_titles.csv"))
-    netflix_compare_implement_foreign(read_file("data/netflix_titles.csv"))
-    amazon_compare_implement_foreign(read_file("data/amazon_prime_titles.csv"))
+    disney_compare_implement_foreign(read_file(DISNEY))
+    netflix_compare_implement_foreign(read_file(NETFLIX))
+    amazon_compare_implement_foreign(read_file(AMAZON))
 
 if __name__ == '__main__':
     main()

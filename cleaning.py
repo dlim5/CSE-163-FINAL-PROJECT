@@ -12,7 +12,7 @@ def covid_data(file):
 
 def non_covid_data(file):
     """
-    filters non-covid year for both movies and TV shows
+    Filters non-covid year for both movies and TV shows
     """
     data = pd.read_csv(file, index_col="date_added", parse_dates=True)
     data_non_covid = data.drop(data.loc["2019":"2021"].index)
