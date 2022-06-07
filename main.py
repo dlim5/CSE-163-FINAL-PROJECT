@@ -1,4 +1,14 @@
-# Start of aggregating and evaluating datas
+"""
+Jason Lim
+Jasmine Mae Alindayu
+CSE 163
+
+This file contains all of the functions that analyzes
+the data sets of the three streaming services: Netflix,
+Disney+ and Amazon Prime Video. The functions also
+produce visualizations for each of the research
+questions of our project.
+"""
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -6,6 +16,14 @@ from cleaning import covid_data, non_covid_data, read_file
 
 
 def top_rating_genres(data):
+    """
+    Takes in a data set of a streaming service
+    with information during COVID-19 (2019 - 2021).
+    The function then filters out the data set
+    for movies and returns a dictionary of the
+    most popular rating for movies in the
+    given streaming platform.
+    """
     data_covid = data[data["type"] == "Movie"]
     max_rating = data_covid.groupby("rating")["rating"].count().idxmax()
     data_highest_rating = data_covid[data_covid["rating"] == max_rating]
@@ -21,6 +39,12 @@ def top_rating_genres(data):
 
 
 def netflix_genre_plot(dic):
+    """
+    Takes in the pre-computed dictionary from the
+    top_rating_genres function. Returns a bar graph
+    visualization of the different genres associated
+    with the most popular rating of movies on Netflix.
+    """
     keys = dic.keys()
     values = dic.values()
     plt.bar(keys, values)
@@ -32,6 +56,12 @@ def netflix_genre_plot(dic):
 
 
 def disney_genre_plot(dic):
+    """
+    Takes in the pre-computed dictionary from the
+    top_rating_genres function. Returns a bar graph
+    visualization of the different genres associated
+    with the most popular rating of movies on Disney+.
+    """
     keys = dic.keys()
     values = dic.values()
     plt.bar(keys, values)
@@ -40,9 +70,16 @@ def disney_genre_plot(dic):
     plt.title("Disney Genre Comparison During Covid for G Movie Rating")
     plt.savefig("disney_genre_comparison.png")
     plt.close()
-    
+
 
 def amazon_genre_plot(dic):
+    """
+    Takes in the pre-computed dictionary from the
+    top_rating_genres function. Returns a bar graph
+    visualization of the different genres associated
+    with the most popular rating of movies on
+    Amazon Prime Video.
+    """
     keys = dic.keys()
     values = dic.values()
     plt.bar(keys, values)
@@ -54,21 +91,52 @@ def amazon_genre_plot(dic):
 
 
 def netflix_years(data):
-    pass
+    """
+    Takes in a time series data set for Netflix and
+    returns a line graph visualization that represents
+    the trend of added TV shows and movies on Netflix
+    over time. The graph also illustrates the release
+    years of the TV shows and movies.
+    """
+    data.plot()
+    plt.title("Trend of Added TV Shows & Movies on Netflix Over Time With"
+              " Release Year")
+    plt.show()
+    plt.close()
 
 
 def disney_years(data):
+    """
+    Takes in a time series data set for Disney+ and
+    returns a line graph visualization that represents
+    the trend of added TV shows and movies on Netflix
+    over time. The graph also illustrates the release
+    years of the TV shows and movies.
+    """
     data.plot()
+    plt.title("Trend of Added TV Shows & Movies on Disney+ Over Time With"
+              " Release Year")
     plt.show()
     plt.close()
 
 
 def amazon_years(data):
-    pass
+    """
+    Takes in a time series data set for Amazon Prime Video
+    and returns a line graph visualization that represents
+    the trend of added TV shows and movies on Netflix
+    over time. The graph also illustrates the release
+    years of the TV shows and movies.
+    """
+    data.plot()
+    plt.title("Trend of Added TV Shows & Movies on Amazon Prime Video Over"
+              " Time With Release Year")
+    plt.show()
+    plt.close()
 
 
 def disney_compare_implement_foreign(data):
-    data = data.dropna(subset=["country"])  
+    data = data.dropna(subset=["country"])
     filter_country = ["United States"]
     filtered_data = data[~data.country.isin(filter_country)]
     filtered_data = filtered_data.groupby(pd.Grouper(freq="Y"))
@@ -98,7 +166,8 @@ def amazon_compare_implement_foreign(data):
     filtered_data = filtered_data.groupby(pd.Grouper(freq="Y"))
     result_df = filtered_data["country"].count()
     result_df.plot(kind="pie")
-    plt.title("Proportion of Added Foreign Movie/TV show in Amazon Prime Per Year")
+    plt.title("Proportion of Added Foreign Movie/TV show in Amazon"
+              " Prime Per Year")
     plt.savefig("amazon_foreign_implementation.png")
     plt.close()
 
@@ -119,12 +188,14 @@ def main():
     amazon_genres = top_rating_genres(amazon_covid)
     amazon_genre_plot(amazon_genres)
     # Q2
-    netflix_years(netflix_covid)
-    disney_years(disney_covid)
+    netflix_years(read_file(NETFLIX))
+    disney_years(read_file(DISNEY))
+    amazon_years(read_file(AMAZON))
     # Q3
     disney_compare_implement_foreign(read_file(DISNEY))
     netflix_compare_implement_foreign(read_file(NETFLIX))
     amazon_compare_implement_foreign(read_file(AMAZON))
+
 
 if __name__ == '__main__':
     main()

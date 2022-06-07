@@ -1,9 +1,19 @@
+"""
+Jason Lim
+Jasmine Mae Alindayu
+CSE 163
+
+This file has functions that pre-computes and cleans
+the data sets for three streaming services: Netflix,
+Disney+ and Amazon Prime Video.
+"""
 import pandas as pd
 
 
 def covid_data(file):
     """
-    Filters 2019-2021 year(covid) for both movies and TV shows
+    Filters for the years 2019-2021 (COVUD-19) for both movies and TV shows
+    and produces a time series data set.
     """
     data = pd.read_csv(file, index_col="date_added", parse_dates=True)
     data_covid = data.loc["2019":"2021"]
@@ -12,7 +22,8 @@ def covid_data(file):
 
 def non_covid_data(file):
     """
-    Filters non-covid year for both movies and TV shows
+    Filters non-covid years for both movies and TV shows and produces
+    a time series data set.
     """
     data = pd.read_csv(file, index_col="date_added", parse_dates=True)
     data_non_covid = data.drop(data.loc["2019":"2021"].index)
@@ -20,6 +31,9 @@ def non_covid_data(file):
 
 
 def read_file(file):
+    """
+    Reads the entire file and produces a time series data set.
+    """
     data = pd.read_csv(file, index_col="date_added", parse_dates=True)
     return data
 
