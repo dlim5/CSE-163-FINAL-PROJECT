@@ -154,7 +154,7 @@ def disney_compare_implement_foreign(data):
     Takes in a data set of a streaming service
     with information during COVID-19 (2019 - 2021).
     This function then drops all the missing values
-    and filters the data to produce a _____ to represent
+    and filters the data to produce a pie chart to represent
     all the TV shows and movies added in Disney+
     that were produced outside of the United States.
     """
@@ -174,7 +174,7 @@ def netflix_compare_implement_foreign(data):
     Takes in a data set of a streaming service
     with information during COVID-19 (2019 - 2021).
     This function then drops all the missing values
-    and filters the data to produce a _____ to represent
+    and filters the data to produce a pie chart to represent
     all the TV shows and movies added in Netflix
     that were produced outside of the United States.
     """
@@ -194,7 +194,7 @@ def amazon_compare_implement_foreign(data):
     Takes in a data set of a streaming service
     with information during COVID-19 (2019 - 2021).
     This function then drops all the missing values
-    and filters the data to produce a _____ to represent
+    and filters the data to produce a pie chart to represent
     all the TV shows and movies added in Amazon Prime Video
     that were produced outside of the United States.
     """
