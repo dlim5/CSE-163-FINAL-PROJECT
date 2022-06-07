@@ -136,6 +136,14 @@ def amazon_years(data):
 
 
 def disney_compare_implement_foreign(data):
+    """
+    Takes in a data set of a streaming service
+    with information during COVID-19 (2019 - 2021).
+    This function then drops all the missing values
+    and filters the data to produce a _____ to represent
+    all the TV shows and movies added in Disney+
+    that were produced outside of the United States.
+    """
     data = data.dropna(subset=["country"])
     filter_country = ["United States"]
     filtered_data = data[~data.country.isin(filter_country)]
@@ -148,6 +156,14 @@ def disney_compare_implement_foreign(data):
 
 
 def netflix_compare_implement_foreign(data):
+    """
+    Takes in a data set of a streaming service
+    with information during COVID-19 (2019 - 2021).
+    This function then drops all the missing values
+    and filters the data to produce a _____ to represent
+    all the TV shows and movies added in Netflix
+    that were produced outside of the United States.
+    """
     data = data.dropna(subset=["country"])
     filter_country = ["United States"]
     filtered_data = data[~data.country.isin(filter_country)]
@@ -160,6 +176,14 @@ def netflix_compare_implement_foreign(data):
 
 
 def amazon_compare_implement_foreign(data):
+    """
+    Takes in a data set of a streaming service
+    with information during COVID-19 (2019 - 2021).
+    This function then drops all the missing values
+    and filters the data to produce a _____ to represent
+    all the TV shows and movies added in Amazon Prime Video
+    that were produced outside of the United States.
+    """
     data = data.dropna(subset=["country"])
     filter_country = ["United States"]
     filtered_data = data[~data.country.isin(filter_country)]
