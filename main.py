@@ -13,7 +13,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 from cleaning import covid_data, non_covid_data, read_file
-
+import statsmodels.api as sm
+from statsmodels.tsa.seasonal import seasonal_decompose
 
 def top_rating_genres(data):
     """
@@ -135,6 +136,19 @@ def amazon_years(data):
     plt.close()
 
 
+def netflix_statistical_analysis(data):
+    """
+    "ETS(Error/Trend/Seasonality) Model"
+    """
+    filtered_data = data.groupby(pd.Grouper(freq="Y"))["title"]
+    count = filtered_data.count()
+    count_df = count.to_frame()
+    result_add = seasonal_decompose(count_df["title"], model="add")
+    result_add.plot()
+    plt.savefig("netflix_analysis.png")
+    plt.close()
+
+
 def disney_compare_implement_foreign(data):
     """
     Takes in a data set of a streaming service
@@ -215,10 +229,11 @@ def main():
     # netflix_years(read_file(NETFLIX))
     # disney_years(read_file(DISNEY))
     # amazon_years(read_file(AMAZON))
+    netflix_statistical_analysis(read_file(NETFLIX))
     # Q3
-    disney_compare_implement_foreign(read_file(DISNEY))
-    netflix_compare_implement_foreign(read_file(NETFLIX))
-    amazon_compare_implement_foreign(read_file(AMAZON))
+    # disney_compare_implement_foreign(read_file(DISNEY))
+    # netflix_compare_implement_foreign(read_file(NETFLIX))
+    # amazon_compare_implement_foreign(read_file(AMAZON))
 
 
 if __name__ == '__main__':
