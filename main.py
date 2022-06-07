@@ -149,7 +149,7 @@ def disney_compare_implement_foreign(data):
     filtered_data = data[~data.country.isin(filter_country)]
     filtered_data = filtered_data.groupby(pd.Grouper(freq="Y"))
     result_df = filtered_data["country"].count()
-    result_df.plot(kind="pie")
+    result_df.plot(kind="pie", autopct='%1.2f%%', shadow=True)
     plt.title("Proportion of Added Foreign Movie/TV show in Disney Per Year")
     plt.savefig("disney_foreign_implementation.png")
     plt.close()
@@ -169,7 +169,7 @@ def netflix_compare_implement_foreign(data):
     filtered_data = data[~data.country.isin(filter_country)]
     filtered_data = filtered_data.groupby(pd.Grouper(freq="Y"))
     result_df = filtered_data["country"].count()
-    result_df.plot(kind="pie")
+    result_df.plot(kind="pie", autopct='%1.2f%%', shadow=True)
     plt.title("Proportion of Added Foreign Movie/TV show in Netflix Per Year")
     plt.savefig("netflix_foreign_implementation.png")
     plt.close()
@@ -189,7 +189,7 @@ def amazon_compare_implement_foreign(data):
     filtered_data = data[~data.country.isin(filter_country)]
     filtered_data = filtered_data.groupby(pd.Grouper(freq="Y"))
     result_df = filtered_data["country"].count()
-    result_df.plot(kind="pie")
+    result_df.plot(kind="pie", autopct='%1.2f%%', shadow=True)
     plt.title("Proportion of Added Foreign Movie/TV show in Amazon"
               " Prime Per Year")
     plt.savefig("amazon_foreign_implementation.png")
@@ -202,19 +202,19 @@ def main():
     DISNEY = "data/disney_plus_titles.csv"
     AMAZON = "data/amazon_prime_titles.csv"
     # Q1
-    disney_covid = covid_data(DISNEY)
-    disney_genres = top_rating_genres(disney_covid)
-    disney_genre_plot(disney_genres)
-    netflix_covid = covid_data(NETFLIX)
-    netflix_genres = top_rating_genres(netflix_covid)
-    netflix_genre_plot(netflix_genres)
-    amazon_covid = covid_data(AMAZON)
-    amazon_genres = top_rating_genres(amazon_covid)
-    amazon_genre_plot(amazon_genres)
-    # Q2
-    netflix_years(read_file(NETFLIX))
-    disney_years(read_file(DISNEY))
-    amazon_years(read_file(AMAZON))
+    # disney_covid = covid_data(DISNEY)
+    # disney_genres = top_rating_genres(disney_covid)
+    # disney_genre_plot(disney_genres)
+    # netflix_covid = covid_data(NETFLIX)
+    # netflix_genres = top_rating_genres(netflix_covid)
+    # netflix_genre_plot(netflix_genres)
+    # amazon_covid = covid_data(AMAZON)
+    # amazon_genres = top_rating_genres(amazon_covid)
+    # amazon_genre_plot(amazon_genres)
+    # # Q2
+    # netflix_years(read_file(NETFLIX))
+    # disney_years(read_file(DISNEY))
+    # amazon_years(read_file(AMAZON))
     # Q3
     disney_compare_implement_foreign(read_file(DISNEY))
     netflix_compare_implement_foreign(read_file(NETFLIX))
