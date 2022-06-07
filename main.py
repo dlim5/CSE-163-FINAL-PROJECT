@@ -90,6 +90,24 @@ def amazon_genre_plot(dic):
     plt.close()
 
 
+def sample_genre_plot(dic):
+    """
+    Takes in the pre-computed dictionary from the
+    top_rating_genres function. Returns a bar graph
+    visualization of the different genres associated
+    with the most popular rating of movies on
+    our sample file.
+    """
+    keys = dic.keys()
+    values = dic.values()
+    plt.bar(keys, values)
+    plt.xticks(fontsize=5)
+    plt.gcf().autofmt_xdate()
+    plt.title("Sample Genre Comparison During Covid for PG-13 Movie Rating")
+    plt.savefig("sample_genre_comparison.png")
+    plt.close()
+
+
 def netflix_years(data):
     """
     Takes in a time series data set for Netflix and
@@ -130,6 +148,21 @@ def amazon_years(data):
     """
     data.plot()
     plt.title("Trend of Added TV Shows & Movies on Amazon Prime Video Over"
+              " Time With Release Year")
+    plt.show()
+    plt.close()
+
+
+def sample_years(data):
+    """
+    Takes in a time series data set for Amazon Prime Video
+    and returns a line graph visualization that represents
+    the trend of added TV shows and movies in the Sample file
+    over time. The graph also illustrates the release
+    years of the TV shows and movies.
+    """
+    data.plot()
+    plt.title("Trend of Added TV Shows & Movies in Sample File Over"
               " Time With Release Year")
     plt.show()
     plt.close()
@@ -209,11 +242,33 @@ def amazon_compare_implement_foreign(data):
     plt.close()
 
 
+def sample_compare_implement_foreign(data):
+    """
+    Takes in a data set of a streaming service
+    with information during COVID-19 (2019 - 2021).
+    This function then drops all the missing values
+    and filters the data to produce a pie chart to represent
+    all the TV shows and movies added in the Sample file
+    that were produced outside of the United States.
+    """
+    data = data.dropna(subset=["country"])
+    filter_country = ["United States"]
+    filtered_data = data[~data.country.isin(filter_country)]
+    filtered_data = filtered_data.groupby(pd.Grouper(freq="Y"))
+    result_df = filtered_data["country"].count()
+    result_df.plot(kind="pie", autopct='%1.2f%%', shadow=True)
+    plt.title("Proportion of Added Foreign Movie/TV show in Sample"
+              " File Per Year")
+    plt.savefig("sample_foreign_implementation.png")
+    plt.close()
+
+
 def main():
     # Data
     NETFLIX = "data/netflix_titles.csv"
     DISNEY = "data/disney_plus_titles.csv"
     AMAZON = "data/amazon_prime_titles.csv"
+    SAMPLE = "data/sample.csv"
     # Q1
     disney_covid = covid_data(DISNEY)
     disney_genres = top_rating_genres(disney_covid)
@@ -224,7 +279,7 @@ def main():
     amazon_covid = covid_data(AMAZON)
     amazon_genres = top_rating_genres(amazon_covid)
     amazon_genre_plot(amazon_genres)
-    # # Q2
+    # Q2
     netflix_years(read_file(NETFLIX))
     disney_years(read_file(DISNEY))
     amazon_years(read_file(AMAZON))
@@ -233,6 +288,14 @@ def main():
     disney_compare_implement_foreign(read_file(DISNEY))
     netflix_compare_implement_foreign(read_file(NETFLIX))
     amazon_compare_implement_foreign(read_file(AMAZON))
+    # Sample file
+    sample_covid = covid_data(SAMPLE)
+    sample_genres = top_rating_genres(sample_covid)
+    sample_genre_plot(sample_genres)
+
+    sample_years(read_file(SAMPLE))
+
+    sample_compare_implement_foreign(read_file(SAMPLE))
 
 
 if __name__ == '__main__':
