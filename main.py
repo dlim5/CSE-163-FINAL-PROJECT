@@ -9,12 +9,11 @@ Disney+ and Amazon Prime Video. The functions also
 produce visualizations for each of the research
 questions of our project.
 """
-import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-from cleaning import covid_data, non_covid_data, read_file
-import statsmodels.api as sm
+from cleaning import covid_data, read_file
 from statsmodels.tsa.seasonal import seasonal_decompose
+
 
 def top_rating_genres(data):
     """
@@ -216,24 +215,24 @@ def main():
     DISNEY = "data/disney_plus_titles.csv"
     AMAZON = "data/amazon_prime_titles.csv"
     # Q1
-    # disney_covid = covid_data(DISNEY)
-    # disney_genres = top_rating_genres(disney_covid)
-    # disney_genre_plot(disney_genres)
-    # netflix_covid = covid_data(NETFLIX)
-    # netflix_genres = top_rating_genres(netflix_covid)
-    # netflix_genre_plot(netflix_genres)
-    # amazon_covid = covid_data(AMAZON)
-    # amazon_genres = top_rating_genres(amazon_covid)
-    # amazon_genre_plot(amazon_genres)
+    disney_covid = covid_data(DISNEY)
+    disney_genres = top_rating_genres(disney_covid)
+    disney_genre_plot(disney_genres)
+    netflix_covid = covid_data(NETFLIX)
+    netflix_genres = top_rating_genres(netflix_covid)
+    netflix_genre_plot(netflix_genres)
+    amazon_covid = covid_data(AMAZON)
+    amazon_genres = top_rating_genres(amazon_covid)
+    amazon_genre_plot(amazon_genres)
     # # Q2
-    # netflix_years(read_file(NETFLIX))
-    # disney_years(read_file(DISNEY))
-    # amazon_years(read_file(AMAZON))
+    netflix_years(read_file(NETFLIX))
+    disney_years(read_file(DISNEY))
+    amazon_years(read_file(AMAZON))
     netflix_statistical_analysis(read_file(NETFLIX))
     # Q3
-    # disney_compare_implement_foreign(read_file(DISNEY))
-    # netflix_compare_implement_foreign(read_file(NETFLIX))
-    # amazon_compare_implement_foreign(read_file(AMAZON))
+    disney_compare_implement_foreign(read_file(DISNEY))
+    netflix_compare_implement_foreign(read_file(NETFLIX))
+    amazon_compare_implement_foreign(read_file(AMAZON))
 
 
 if __name__ == '__main__':
